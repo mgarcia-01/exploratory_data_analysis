@@ -1,15 +1,12 @@
 fileURL <- "/Users/michaelgarcia/CloudStation/ExploratoryDataAnalysis/household_power_consumption.txt"
 hpc <- read.table(file = fileURL, header = TRUE,sep = ";")
 
-hpc$Date <- as.character(hpc$Date)
-hpc <-  hpc[ which(as.character(hpc$Date) >= "2/1/2007"
-                      & as.character(hpc$Date) <= "2/2/2007"), ]
 
+hpc$Global_active_power <- as.numeric(hpc$Global_active_power)
 hpc$Date <- as.Date(hpc$Date, "%d/%m/%Y")
+
 hpc <-  hpc[ which(hpc$Date == "2007-2-1"
                    | hpc$Date == "2007-2-2"), ]
-
-
 
 
 
@@ -44,17 +41,13 @@ plot(hpc$Date, hpc$Global_active_power)
 
 
 library(ggplot2)
-hpc$Global_active_power <- as.numeric(hpc$Global_active_power)
-ggplot(hpc, aes( x = factor(weekdays(Date)), y = hpc$Global_active_power), group = 1) + geom_line() + ylim(
-                0,max(hpc$Global_active_power))
-
-as.POSIXct(strptime(hpc$Time,"%H:%M:%S"))
-
 
 wk_hpc <- aggregate(hpc[,3], list(hpc$Date, hpc$Time), mean)
 names(wk_hpc) <- c("Date","Time", "Global_active_power")
-ggplot(wk_hpc, aes( x = factor(weekdays(Date)), y = wk_hpc$Global_active_power), group = 1) + geom_line() + ylim(
+ggplot(wk_hpc, aes( x = factor(wk_hpc$Time), y = wk_hpc$Global_active_power) #, group = 1
+       , labs(x = c(unique(weekdays(wk_hpc$Date))))) + geom_line() + ylim(
         0,max(wk_hpc$Global_active_power))
+
 
 
 
