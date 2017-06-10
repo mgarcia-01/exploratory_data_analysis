@@ -43,9 +43,12 @@ plot(hpc$Date, hpc$Global_active_power)
 library(ggplot2)
 
 wk_hpc <- aggregate(hpc[,3], list(hpc$Date, hpc$Time), mean)
+wk_hpc$Time <- factor(wk_hpc$Time)
+
+
 names(wk_hpc) <- c("Date","Time", "Global_active_power")
-ggplot(wk_hpc, aes( x = factor(wk_hpc$Time), y = wk_hpc$Global_active_power) #, group = 1
-       , labs(x = c(unique(weekdays(wk_hpc$Date))))) + geom_line() + ylim(
+ggplot(wk_hpc, aes( x = Time, y = wk_hpc$Global_active_power, group = 1) 
+        ) + geom_line() + ylim(
         0,max(wk_hpc$Global_active_power))
 
 
