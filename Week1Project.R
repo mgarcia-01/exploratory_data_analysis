@@ -37,17 +37,23 @@ library(datasets)
 
 ############################## Plot 1 #########################
 
-hist(as.numeric(as.character(hpc$Global_active_power)), col = "red" #  , breaks=seq(0,6,6)
-     #, freq = TRUE  ,xaxt='n' 
-    ,labels = seq(0,6,by=2)
+hist(as.numeric(hpc$Global_active_power)/1000, col = "red"   
+   #   , breaks=seq(0,6, by = 1)
+     , freq = TRUE  ,xaxt='n' 
+    #,labels = seq(0,10,by=1)
      ,main="Global Active Power", ylim = c(0,1200)
      ,xlab="Global Active Power (kilowatts)"
      
      )
- axis(side=1, at=seq(0,6,6), labels=seq(0,6,6))
+ axis(side=1, at=seq(0,6, by=1), labels=seq(0,6, by=1))
 axis(side=2, at=seq(0,1000,200), labels=seq(0,1000,200))
 
 #hist(hpc$Global_active_power, col="red", main="Global Active Power", xlab="Global Active Power (kilowatts)")
+
+png(filename = "Rplot%03d.png",
+    width = 480, height = 480, units = "px", pointsize = 12,
+    bg = "white",  res = NA, ...,
+    type = c("cairo", "cairo-png", "Xlib", "quartz"), antialias)
 
 ######################### Plot 2 #########################
 
