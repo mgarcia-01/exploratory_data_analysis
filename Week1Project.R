@@ -42,8 +42,6 @@ library(datasets)
 ############################## Plot 1 #########################
 
 
-
-
 #hist(hpc$Global_active_power, col="red", main="Global Active Power", xlab="Global Active Power (kilowatts)")
 
 png(filename = plot1URL,
