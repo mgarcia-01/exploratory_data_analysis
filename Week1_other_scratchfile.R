@@ -1,6 +1,6 @@
-plot((hpc$Time)
+plot(hpc$myTime
      , hpc$Global_active_power
-     , type="l", col="black"
+     , type="b"
      , xlab=""
      , ylab="Global Active Power (kilowatts)")
 
