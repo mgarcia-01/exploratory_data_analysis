@@ -1,8 +1,11 @@
 fileURL <- "/Users/michaelgarcia/CloudStation/ExploratoryDataAnalysis/household_power_consumption.txt"
 ##fileURL <- "afp://mga_share/DataScienceDirectory/ExploratoryDataAnalysis/household_power_consumption.txt"
 ## afp://DOMAIN;User@ServerName/ShareName
+fileURL <- "T:/DataScienceDirectory/ExploratoryDataAnalysis/household_power_consumption.txt"
 #abc <- download.file(fileURL, destfile = abc)
 ##updated
+plot1URL <- "F:/RStudio Files/exploratory_data_analysis/plot1.png"
+
 
 hpc <- read.table(file = fileURL, header = TRUE,sep = ";")
 
@@ -38,23 +41,30 @@ library(datasets)
 
 ############################## Plot 1 #########################
 
-hist(as.numeric(hpc$Global_active_power)/1000, col = "red"   
-   #   , breaks=seq(0,6, by = 1)
-     , freq = TRUE  ,xaxt='n' 
-    #,labels = seq(0,10,by=1)
-     ,main="Global Active Power", ylim = c(0,1200)
-     ,xlab="Global Active Power (kilowatts)"
-     
-     )
- axis(side=1, at=seq(0,6, by=1), labels=seq(0,6, by=1))
-axis(side=2, at=seq(0,1000,200), labels=seq(0,1000,200))
+
+
 
 #hist(hpc$Global_active_power, col="red", main="Global Active Power", xlab="Global Active Power (kilowatts)")
 
-png(filename = "Rplot%03d.png",
+png(filename = plot1URL,
     width = 480, height = 480, units = "px", pointsize = 12,
-    bg = "white",  res = NA, ...,
-    type = c("cairo", "cairo-png", "Xlib", "quartz"), antialias)
+    bg = "white",  res = NA,## ...,
+    #type = c("cairo", "cairo-png", "Xlib", "quartz"), 
+    antialias = c("default"))
+
+hist(as.numeric(hpc$Global_active_power), col = "red"   
+     #   , breaks=seq(0,6, by = 1)
+     , freq = TRUE  ,xaxt='n' 
+     #,labels = seq(0,10,by=1)
+     ,main="Global Active Power", ylim = c(0,1200)
+     ,xlab="Global Active Power (kilowatts)"
+     
+)
+axis(side=1, at=seq(0,6, by=1), labels=seq(0,6, by=1))
+axis(side=2, at=seq(0,1000,200), labels=seq(0,1000,200))
+
+dev.copy(png,plot1URL)
+dev.off()
 
 ######################### Plot 2 #########################
 

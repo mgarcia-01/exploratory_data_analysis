@@ -16,3 +16,9 @@ mxActivePower <- max(hpc$Global_active_power)
 
 xrange <- range
 plot(hpc$Date, hpc$Global_active_power)
+
+
+
+
+
+
