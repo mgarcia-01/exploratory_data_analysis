@@ -2,6 +2,7 @@ fileURL <- "/Users/michaelgarcia/CloudStation/ExploratoryDataAnalysis/household_
 ##fileURL <- "afp://mga_share/DataScienceDirectory/ExploratoryDataAnalysis/household_power_consumption.txt"
 ## afp://DOMAIN;User@ServerName/ShareName
 #abc <- download.file(fileURL, destfile = abc)
+##updated
 
 hpc <- read.table(file = fileURL, header = TRUE,sep = ";")
 
