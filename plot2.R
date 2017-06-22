@@ -10,17 +10,21 @@ hpc <- cbind(myTime,hpc)
 hpc$Date <- as.Date(hpc$Date, "%d/%m/%Y")
 hpc <-  hpc[ which(hpc$Date == "2007-2-1"
                    | hpc$Date == "2007-2-2"), ]
-############################## Plot 1 #########################
-fileURL <- "/Users/michaelgarcia/CloudStation/ExploratoryDataAnalysis/household_power_consumption.txt"
-##fileURL <- "afp://mga_share/DataScienceDirectory/ExploratoryDataAnalysis/household_power_consumption.txt"
-## afp://DOMAIN;User@ServerName/ShareName
-fileURL <- "T:/DataScienceDirectory/ExploratoryDataAnalysis/household_power_consumption.txt"
-#abc <- download.file(fileURL, destfile = abc)
-##updated
-plot1URL <- "/Users/michaelgarcia/exploratorydata_analysis/exploratory_data_analysis/plot1.png"
-plot2URL <- "/Users/michaelgarcia/exploratorydata_analysis/exploratory_data_analysis/plot2.png"
-plot1URL <- "F:/RStudio Files/exploratory_data_analysis/plot1.png"
 
-hpc <- read.table(file = fileURL, header = TRUE,sep = ";")
+######################### Plot 2 #########################
 
-hpc$Global_active_power <- as.numeric(as.character(hpc$Global_active_power))
+png(filename = plot2URL,
+    width = 480, height = 480, units = "px", pointsize = 12,
+    bg = "white",  res = NA,## ...,
+    #type = c("cairo", "cairo-png", "Xlib", "quartz"), 
+    antialias = c("default"))
+
+plot(hpc$myTime
+     , hpc$Global_active_power
+     , type= "l" ## "b"  plots points and lines
+     , xlab=""
+     , ylab="Global Active Power (kilowatts)")
+
+dev.off()
+
+

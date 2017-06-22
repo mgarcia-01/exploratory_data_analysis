@@ -1,3 +1,8 @@
+source(file.path(getwd(), paste("plot1", ".R",sep = "")))
+source(file.path(getwd(), paste("plot2", ".R",sep = "")))
+source(file.path(getwd(), paste("plot3", ".R",sep = "")))
+source(file.path(getwd(), paste("plot4", ".R",sep = "")))
+
 fileURL <- "/Users/michaelgarcia/CloudStation/ExploratoryDataAnalysis/household_power_consumption.txt"
 ##fileURL <- "afp://mga_share/DataScienceDirectory/ExploratoryDataAnalysis/household_power_consumption.txt"
 ## afp://DOMAIN;User@ServerName/ShareName

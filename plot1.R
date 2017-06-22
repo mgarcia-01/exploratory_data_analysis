@@ -40,7 +40,8 @@ hist(hpc$Global_active_power, col = "red"
      ,xlab="Global Active Power (kilowatts)"
 )
 
+dev.off()
 
-
-axis(side=1, at=seq(0,6, by=1), labels=seq(0,6, by=1))
-axis(side=2, at=seq(0,1000,200), labels=seq(0,1000,200))
+## not needed
+#axis(side=1, at=seq(0,6, by=1), labels=seq(0,6, by=1))
+#axis(side=2, at=seq(0,1000,200), labels=seq(0,1000,200))

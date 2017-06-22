@@ -1,5 +1,4 @@
 fileURL <- file.path(getwd(), paste("household_power_consumption", ".txt",sep = ""))
-
 plot3URL <- file.path(getwd(), paste("plot3", ".png",sep = ""))
 
 
@@ -12,6 +11,13 @@ hpc$Date <- as.Date(hpc$Date, "%d/%m/%Y")
 hpc <-  hpc[ which(hpc$Date == "2007-2-1"
                    | hpc$Date == "2007-2-2"), ]
 ########### plot 3 ###################
+
+png(filename = plot3URL,
+    width = 480, height = 480, units = "px", pointsize = 12,
+    bg = "white",  res = NA,## ...,
+    #type = c("cairo", "cairo-png", "Xlib", "quartz"), 
+    antialias = c("default"))
+
 
 gLines <- c("black", "red", "blue")
 
@@ -31,3 +37,6 @@ lines(hpc$myTime
 legend("topright"
        , legend=gLabels
        , col=gLines, lty="solid")
+
+
+dev.off()

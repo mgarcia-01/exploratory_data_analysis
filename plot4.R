@@ -11,6 +11,12 @@ hpc <-  hpc[ which(hpc$Date == "2007-2-1"
                    | hpc$Date == "2007-2-2"), ]
 
 ####################### Plot 4 ####################
+png(filename = plot4URL,
+    width = 480, height = 480, units = "px", pointsize = 12,
+    bg = "white",  res = NA,## ...,
+    #type = c("cairo", "cairo-png", "Xlib", "quartz"), 
+    antialias = c("default"))
+
 
 gLabels <- c("Sub_metering_1","Sub_metering_2","Sub_metering_3")
 gLines <- c("black","red","blue")
@@ -26,3 +32,5 @@ lines(hpc$myTime, hpc$Sub_metering_3, type="l", col="blue")
 legend("topright", bty="n", legend=gLabels, lty=1, col=gLines)
 
 plot(hpc$myTime, hpc$Global_reactive_power, type="l", col="black", xlab="datetime", ylab="Global_reactive_power")
+
+dev.off()
