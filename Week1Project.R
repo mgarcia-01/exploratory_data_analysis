@@ -3,13 +3,13 @@ fileURL <- "/Users/michaelgarcia/CloudStation/ExploratoryDataAnalysis/household_
 ## afp://DOMAIN;User@ServerName/ShareName
 fileURL <- "T:/DataScienceDirectory/ExploratoryDataAnalysis/household_power_consumption.txt"
 #abc <- download.file(fileURL, destfile = abc)
-<<<<<<< HEAD
+
 ##updated
-=======
+
 ##updated some for other pc
 plot1URL <- "/Users/michaelgarcia/exploratorydata_analysis/exploratory_data_analysis/plot1.png"
 plot2URL <- "/Users/michaelgarcia/exploratorydata_analysis/exploratory_data_analysis/plot2.png"
->>>>>>> c6ed50f36916d37c25b4be7b1a0b6892980f3915
+
 plot1URL <- "F:/RStudio Files/exploratory_data_analysis/plot1.png"
 
 
