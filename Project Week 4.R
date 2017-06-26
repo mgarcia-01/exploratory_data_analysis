@@ -31,7 +31,7 @@ png(filename = plot1img,
 
 plot1 <- barplot(yearEmission$Emissions, names.arg = yearEmission$year)
 dev.off()
-  #plot(yearEmission$year, yearEmission$Emissions, xlab = "year", ylab = "emissions", type = "b")
+#plot(yearEmission$year, yearEmission$Emissions, xlab = "year", ylab = "emissions", type = "b")
 
 
 ###############    #plot 2  ###############
@@ -62,13 +62,15 @@ plot3img <- file.path(getwd(), paste("plot3", ".png",sep = ""))
 
 NEIFile <- file.path(getwd(), paste("summarySCC_PM25", ".rds",sep = ""))
 SCCFile <- file.path(getwd(), paste("Source_Classification_Code", ".rds",sep = ""))
+
 NEI <- readRDS(NEIFile)
 SCC <- readRDS(SCCFile)
+
 NEISCC <- merge(x = NEI, y = SCC, by = "SCC", all.y = TRUE)
 
 NEISCC <- NEISCC[ which(NEISCC$fips == "24510"), ]
 yearEmission3 <- aggregate(NEISCC$Emissions, list(NEISCC$type, NEISCC$year),sum)
-names(yearEmission3) <- c("year", "type","Emissions")
+###names(yearEmission3) <- c("year", "type","Emissions")
 
 png(filename = plot3img,
     width = 480, height = 480, units = "px", pointsize = 12,
@@ -76,16 +78,16 @@ png(filename = plot3img,
     #type = c("cairo", "cairo-png", "Xlib", "quartz"), 
     antialias = c("default"))
 
-part1 <- ggplot(yearEmission3
-            , aes(y=x, x=Group.2)
-            )+geom_point(aes(colour = factor(Group.1)
-                             ) 
-                         , size = 1
-                         )
-part1+geom_col(aes(group=Group.1
+plot3 <- ggplot(yearEmission3
+                , aes(y=x, x=Group.2)
+)+geom_line(aes(group=Group.1
                 ,colour=factor(Group.1)
-                    )
-                )
+)
+)+geom_point(aes(group=Group.1
+                 ,colour=factor(Group.1)
+)
+, size = 2
+)
 dev.off()
 
 
@@ -101,7 +103,7 @@ NEISCC <- merge(x = NEI, y = SCC, by = "SCC", all = TRUE)
 
 
 yearCoal <- aggregate(NEISCC$Emissions, list(NEISCC$year),mean)
-names(yearCoal) <- c("year","Emissions")
+#names(yearCoal) <- c("year","Emissions")
 
 # this produces barchart 
 png(filename = plot4img,
@@ -115,14 +117,14 @@ plot4 <-barplot(yearCoal$Emissions
                 , names.arg = yearCoal$year
                 , xlab = "Year"
                 , ylab = "US Avg Coal Emissions"
-                )
+)
 text(x = plot4
      , y = round(as.numeric(yearCoal$Emissions), digits = 1)
      , label = round(as.numeric(yearCoal$Emissions), digits = 1)
      , pos = 1
      , cex = 0.8
      , col = "red"
-     )
+)
 
 dev.off()
 
@@ -156,18 +158,18 @@ png(filename = plot5img,
     antialias = c("default"))
 
 plot5 <- barplot(yearCoal$Emissions
-                  ,plot = TRUE
-                  , names.arg = yearCoal$year
-                  , xlab = "Year"
-                  , ylab = "Baltimore Avg Coal Emissions"
-                  )
+                 ,plot = TRUE
+                 , names.arg = yearCoal$year
+                 , xlab = "Year"
+                 , ylab = "Baltimore Avg Coal Emissions"
+)
 text(x = plot5
      , y = round(as.numeric(yearCoal$Emissions), digits = 1)
      , label = round(as.numeric(yearCoal$Emissions), digits = 1)
      , pos = 1
      , cex = 0.8
      , col = "red"
-  )
+)
 
 dev.off()
 
@@ -184,7 +186,8 @@ SCC <- SCC[grep("*ehicle*"
                 ,SCC$Short.Name),]
 NEISCC <- merge(x = NEI, y = SCC, by = "SCC", all = TRUE)
 NEISCC <- NEISCC[ which(NEISCC$fips == "24510" | NEISCC$fips == "06037"), ]
-
+NEISCC[NEISCC$city =="24510"]<-"Baltimore"
+NEISCC[NEISCC$city =="06037"] <- "Los Angeles"
 cityEmission <- aggregate(NEISCC$Emissions, list(NEISCC$fips,NEISCC$year), mean)
 ##names(cityEmission) <- c("city","year","Emissions")
 
@@ -196,21 +199,21 @@ png(filename = plot2img,
 
 cityEm <- ggplot(cityEmission
                  , aes(y=x, x=Group.2)
-                )
-      cityEm+geom_line(aes(group=as.character(Group.1)
-                                     ,colour=factor(as.character(Group.1))
-                          )
-                      )+geom_area(aes(group=as.character(Group.1)
-                                                     ,colour=factor(as.character(Group.1))
-                                     )
-                                  )+geom_point(aes(group=as.character(Group.1)
-                                                      ,colour=factor(as.character(Group.1))
-                                                      )
-                                                  ,size = 3
-                                                  ,position = "identity"
-                                               )
+)
+cityEm+geom_line(aes(group=as.character(Group.1)
+                     ,colour=factor(as.character(Group.1))
+)
+)+geom_area(aes(group=as.character(Group.1)
+                ,colour=factor(as.character(Group.1))
+)
+)+geom_point(aes(group=as.character(Group.1)
+                 ,colour=factor(as.character(Group.1))
+)
+,size = 3
+,position = "identity"
+)
 
-      
 
-  
+
+
 dev.off()
