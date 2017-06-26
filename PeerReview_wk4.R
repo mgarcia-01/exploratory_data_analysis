@@ -212,8 +212,4 @@ cityEm+geom_line(aes(group=as.character(Group.1)
 ,size = 3
 ,position = "identity"
 )
-
-
-
-
 dev.off()

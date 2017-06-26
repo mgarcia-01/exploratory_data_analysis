@@ -1,42 +1,33 @@
-fileURL <- file.path(getwd(), paste("household_power_consumption", ".txt",sep = ""))
-plot3URL <- file.path(getwd(), paste("plot3", ".png",sep = ""))
+###############    #plot 3  ###############
+library(ggplot2)
+plot3img <- file.path(getwd(), paste("plot3", ".png",sep = ""))
 
+NEIFile <- file.path(getwd(), paste("summarySCC_PM25", ".rds",sep = ""))
+SCCFile <- file.path(getwd(), paste("Source_Classification_Code", ".rds",sep = ""))
 
-hpc <- read.table(file = fileURL, header = TRUE,sep = ";")
+NEI <- readRDS(NEIFile)
+SCC <- readRDS(SCCFile)
 
-hpc$Global_active_power <- as.numeric(as.character(hpc$Global_active_power))
-myTime <-strptime(paste(hpc$Date, hpc$Time, sep=" "),"%d/%m/%Y %H:%M:%S")
-hpc <- cbind(myTime,hpc)
-hpc$Date <- as.Date(hpc$Date, "%d/%m/%Y")
-hpc <-  hpc[ which(hpc$Date == "2007-2-1"
-                   | hpc$Date == "2007-2-2"), ]
-########### plot 3 ###################
+NEISCC <- merge(x = NEI, y = SCC, by = "SCC", all.y = TRUE)
 
-png(filename = plot3URL,
+NEISCC <- NEISCC[ which(NEISCC$fips == "24510"), ]
+yearEmission3 <- aggregate(NEISCC$Emissions, list(NEISCC$type, NEISCC$year),sum)
+###names(yearEmission3) <- c("year", "type","Emissions")
+
+png(filename = plot3img,
     width = 480, height = 480, units = "px", pointsize = 12,
     bg = "white",  res = NA,## ...,
     #type = c("cairo", "cairo-png", "Xlib", "quartz"), 
     antialias = c("default"))
 
-
-gLines <- c("black", "red", "blue")
-
-gLabels <- c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3")
-
-plot(hpc$myTime, hpc$Sub_metering_1
-     , type="l"
-     , col=gLines[1]
-     , xlab=""
-     , ylab="Energy sub metering")
-lines(hpc$myTime
-      , hpc$Sub_metering_2
-      , col=gLines[2])
-lines(hpc$myTime
-      , hpc$Sub_metering_3
-      , col=gLines[3])
-legend("topright"
-       , legend=gLabels
-       , col=gLines, lty="solid")
-
-
+plot3 <- ggplot(yearEmission3
+                , aes(y=x, x=Group.2)
+)+geom_line(aes(group=Group.1
+                ,colour=factor(Group.1)
+)
+)+geom_point(aes(group=Group.1
+                 ,colour=factor(Group.1)
+)
+, size = 2
+)
 dev.off()
