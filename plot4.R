@@ -1,4 +1,3 @@
-###############    plot 4  ###############
 plot4img <- file.path(getwd(), paste("plot4", ".png",sep = ""))
 NEIFile <- file.path(getwd(), paste("summarySCC_PM25", ".rds",sep = ""))
 SCCFile <- file.path(getwd(), paste("Source_Classification_Code", ".rds",sep = ""))
@@ -10,7 +9,7 @@ NEISCC <- merge(x = NEI, y = SCC, by = "SCC", all = TRUE)
 
 
 yearCoal <- aggregate(NEISCC$Emissions, list(NEISCC$year),mean)
-#names(yearCoal) <- c("year","Emissions")
+names(yearCoal) <- c("year","Emissions")
 
 # this produces barchart 
 png(filename = plot4img,

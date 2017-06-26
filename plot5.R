@@ -1,4 +1,4 @@
-###############    plot 5  ###############
+###############    plot 5  ################
 plot5img <- file.path(getwd(), paste("plot5", ".png",sep = ""))
 
 NEIFile <- file.path(getwd(), paste("summarySCC_PM25", ".rds",sep = ""))

@@ -1,3 +1,12 @@
+source(file.path(getwd(),paste("plot2",".R",sep = "")), verbose = TRUE)
+source(file.path(getwd(),paste("plot3",".R",sep = "")), verbose = TRUE)
+source(file.path(getwd(),paste("plot4",".R",sep = "")), verbose = TRUE)
+source(file.path(getwd(),paste("plot5",".R",sep = "")), verbose = TRUE)
+source(file.path(getwd(),paste("plot6",".R",sep = "")), verbose = TRUE)
+
+
+
+
 #source(file.path(getwd(), paste("plot4", ".R",sep = "")))
 plot1img <- file.path(getwd(), paste("plot1", ".png",sep = ""))
 
@@ -40,6 +49,7 @@ SCCFile <- file.path(getwd(), paste("Source_Classification_Code", ".rds",sep = "
 NEI <- readRDS(NEIFile)
 SCC <- readRDS(SCCFile)
 NEISCC <- merge(x = NEI, y = SCC, by = "SCC", all.y = TRUE)
+NEISCC <- NEISCC[ which(NEISCC$fips == "24510"), ]
 
 plot2img <- file.path(getwd(), paste("plot2", ".png",sep = ""))
 yearEmission2 <- aggregate(NEISCC$Emissions, list(NEISCC$year), sum)
@@ -51,7 +61,7 @@ png(filename = plot2img,
     #type = c("cairo", "cairo-png", "Xlib", "quartz"), 
     antialias = c("default"))
 
-plot2 <- plot(yearEmission2$year, yearEmission2$Emissions, xlab = "year", ylab = "emissions", type = "b")
+plot2 <- plot(yearEmission2$year, yearEmission2$Emissions, xlab = "year", ylab = "Baltimore Emissions", type = "b")
 
 dev.off()
 
@@ -103,7 +113,7 @@ NEISCC <- merge(x = NEI, y = SCC, by = "SCC", all = TRUE)
 
 
 yearCoal <- aggregate(NEISCC$Emissions, list(NEISCC$year),mean)
-#names(yearCoal) <- c("year","Emissions")
+names(yearCoal) <- c("year","Emissions")
 
 # this produces barchart 
 png(filename = plot4img,
@@ -117,18 +127,16 @@ plot4 <-barplot(yearCoal$Emissions
                 , names.arg = yearCoal$year
                 , xlab = "Year"
                 , ylab = "US Avg Coal Emissions"
-)
-text(x = plot4
-     , y = round(as.numeric(yearCoal$Emissions), digits = 1)
-     , label = round(as.numeric(yearCoal$Emissions), digits = 1)
-     , pos = 1
-     , cex = 0.8
-     , col = "red"
-)
+              )
+        text(x = plot4
+             , y = round(as.numeric(yearCoal$Emissions), digits = 1)
+             , label = round(as.numeric(yearCoal$Emissions), digits = 1)
+             , pos = 1
+             , cex = 0.8
+             , col = "red"
+        )
 
 dev.off()
-
-
 
 ###############    plot 5  ###############
 plot5img <- file.path(getwd(), paste("plot5", ".png",sep = ""))

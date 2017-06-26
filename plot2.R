@@ -4,6 +4,7 @@ SCCFile <- file.path(getwd(), paste("Source_Classification_Code", ".rds",sep = "
 NEI <- readRDS(NEIFile)
 SCC <- readRDS(SCCFile)
 NEISCC <- merge(x = NEI, y = SCC, by = "SCC", all.y = TRUE)
+NEISCC <- NEISCC[ which(NEISCC$fips == "24510"), ]
 
 plot2img <- file.path(getwd(), paste("plot2", ".png",sep = ""))
 yearEmission2 <- aggregate(NEISCC$Emissions, list(NEISCC$year), sum)
@@ -15,6 +16,6 @@ png(filename = plot2img,
     #type = c("cairo", "cairo-png", "Xlib", "quartz"), 
     antialias = c("default"))
 
-plot2 <- plot(yearEmission2$year, yearEmission2$Emissions, xlab = "year", ylab = "emissions", type = "b")
+plot2 <- plot(yearEmission2$year, yearEmission2$Emissions, xlab = "year", ylab = "Baltimore Emissions", type = "b")
 
 dev.off()
