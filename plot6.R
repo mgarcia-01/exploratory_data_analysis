@@ -1,6 +1,6 @@
 ###############    plot 6  ################
 library(ggplot2)
-plot5img <- file.path(getwd(), paste("plot5", ".png",sep = ""))
+plot6img <- file.path(getwd(), paste("plot6", ".png",sep = ""))
 NEIFile <- file.path(getwd(), paste("summarySCC_PM25", ".rds",sep = ""))
 SCCFile <- file.path(getwd(), paste("Source_Classification_Code", ".rds",sep = ""))
 NEI <- readRDS(NEIFile)
@@ -15,25 +15,24 @@ NEISCC[NEISCC$city =="06037"] <- "Los Angeles"
 cityEmission <- aggregate(NEISCC$Emissions, list(NEISCC$fips,NEISCC$year), mean)
 ##names(cityEmission) <- c("city","year","Emissions")
 
-png(filename = plot2img,
+png(filename = plot6img,
     width = 480, height = 480, units = "px", pointsize = 12,
     bg = "white",  res = NA,## ...,
     #type = c("cairo", "cairo-png", "Xlib", "quartz"), 
     antialias = c("default"))
 
-cityEm <- ggplot(cityEmission
+ggplot(cityEmission
                  , aes(y=x, x=Group.2)
-)
-cityEm+geom_line(aes(group=as.character(Group.1)
-                     ,colour=factor(as.character(Group.1))
-)
-)+geom_area(aes(group=as.character(Group.1)
-                ,colour=factor(as.character(Group.1))
-)
-)+geom_point(aes(group=as.character(Group.1)
-                 ,colour=factor(as.character(Group.1))
-)
-,size = 3
-,position = "identity"
-)
+                )+geom_line(aes(group=as.character(Group.1)
+                                     ,colour=factor(as.character(Group.1))
+                                      )
+                                      )+geom_area(aes(group=as.character(Group.1)
+                                                      ,colour=factor(as.character(Group.1))
+                                                      )
+                                                  )+geom_point(aes(group=as.character(Group.1)
+                                                                   ,colour=factor(as.character(Group.1))
+                                                                    )
+                                                              ,size = 3
+                                                              ,position = "identity"
+                                                              )
 dev.off()

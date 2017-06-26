@@ -182,7 +182,7 @@ text(x = plot5
 dev.off()
 
 
-###############    plot 6  ###############
+###############    plot 6  ################
 library(ggplot2)
 plot5img <- file.path(getwd(), paste("plot5", ".png",sep = ""))
 NEIFile <- file.path(getwd(), paste("summarySCC_PM25", ".rds",sep = ""))
@@ -205,11 +205,10 @@ png(filename = plot2img,
     #type = c("cairo", "cairo-png", "Xlib", "quartz"), 
     antialias = c("default"))
 
-cityEm <- ggplot(cityEmission
-                 , aes(y=x, x=Group.2)
-)
-cityEm+geom_line(aes(group=as.character(Group.1)
-                     ,colour=factor(as.character(Group.1))
+ggplot(cityEmission
+       , aes(y=x, x=Group.2)
+)+geom_line(aes(group=as.character(Group.1)
+                ,colour=factor(as.character(Group.1))
 )
 )+geom_area(aes(group=as.character(Group.1)
                 ,colour=factor(as.character(Group.1))

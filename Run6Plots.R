@@ -1,0 +1,6 @@
+source(file.path(getwd(),paste("plot1",".R",sep = "")), verbose = TRUE)
+source(file.path(getwd(),paste("plot2",".R",sep = "")), verbose = TRUE)
+source(file.path(getwd(),paste("plot3",".R",sep = "")), verbose = TRUE)
+source(file.path(getwd(),paste("plot4",".R",sep = "")), verbose = TRUE)
+source(file.path(getwd(),paste("plot5",".R",sep = "")), verbose = TRUE)
+source(file.path(getwd(),paste("plot6",".R",sep = "")), verbose = TRUE)
