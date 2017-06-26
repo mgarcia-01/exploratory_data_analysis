@@ -70,6 +70,7 @@ grep(pattern, x, ignore.case = FALSE, extended = TRUE,
 library(ggplot2)
 plot4img <- file.path(getwd(), paste("plot4", ".png",sep = ""))
 yearEmission4 <- aggregate(NEISCC1$Emissions, list(NEISCC1$type, NEISCC1$year),sum)
+NEISCC2 <- NEISCC1[grep("*coal*|*Coal*",NEISCC1$Short.Name),]
 names(yearEmission4) <- c("year", "type","Emissions")
 
 
