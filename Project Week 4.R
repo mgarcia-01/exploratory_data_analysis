@@ -40,9 +40,10 @@ dev.off()
 
 
 ###############    #plot 3  ###############
+library(ggplot2)
 plot3img <- file.path(getwd(), paste("plot3", ".png",sep = ""))
-yearEmission2 <- aggregate(NEISCC1$Emissions, list(NEISCC1$year), sum)
-names(yearEmission2) <- c("year","Emissions")
+yearEmission3 <- aggregate(NEISCC1$Emissions, list(NEISCC1$type, NEISCC1$year),sum)
+names(yearEmission3) <- c("year", "type","Emissions")
 
 png(filename = plot3img,
     width = 480, height = 480, units = "px", pointsize = 12,
@@ -50,10 +51,26 @@ png(filename = plot3img,
     #type = c("cairo", "cairo-png", "Xlib", "quartz"), 
     antialias = c("default"))
 
-plot2 <- plot(yearEmission2$year, yearEmission2$Emissions, xlab = "year", ylab = "emissions", type = "b")
-
+part1 <- ggplot(yearEmission3
+            , aes(y=x, x=Group.2)
+            )+geom_point(aes(colour = factor(Group.1)
+                             ) 
+                         , size = 1
+                         )
+part1+geom_line(aes(group=Group.1
+                ,colour=factor(Group.1)
+                    )
+                )
 dev.off()
 
+
+###############    #plot 4  ###############
+grep(pattern, x, ignore.case = FALSE, extended = TRUE,
+     perl = FALSE, value = FALSE, fixed = FALSE, useBytes = FALSE)
+library(ggplot2)
+plot4img <- file.path(getwd(), paste("plot4", ".png",sep = ""))
+yearEmission4 <- aggregate(NEISCC1$Emissions, list(NEISCC1$type, NEISCC1$year),sum)
+names(yearEmission4) <- c("year", "type","Emissions")
 
 
 
