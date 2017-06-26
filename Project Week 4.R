@@ -1,8 +1,10 @@
 #source(file.path(getwd(), paste("plot4", ".R",sep = "")))
+plot1img <- file.path(getwd(), paste("plot1", ".png",sep = ""))
+
 
 NEIFile <- file.path(getwd(), paste("summarySCC_PM25", ".rds",sep = ""))
 SCCFile <- file.path(getwd(), paste("Source_Classification_Code", ".rds",sep = ""))
-plot1img <- file.path(getwd(), paste("plot1", ".png",sep = ""))
+
 NEI <- readRDS(NEIFile)
 SCC <- readRDS(SCCFile)
 
@@ -12,8 +14,15 @@ NEISCC1 <- NEISCC[ which(NEISCC$fips == "24510"), ]
 
 
 ##########################  plot 1  ##############
+NEIFile <- file.path(getwd(), paste("summarySCC_PM25", ".rds",sep = ""))
+SCCFile <- file.path(getwd(), paste("Source_Classification_Code", ".rds",sep = ""))
+NEI <- readRDS(NEIFile)
+SCC <- readRDS(SCCFile)
+NEISCC <- merge(x = NEI, y = SCC, by = "SCC", all.y = TRUE)
+
 yearEmission <- aggregate(NEISCC$Emissions, list(NEISCC$year), sum)
 names(yearEmission) <- c("year","Emissions")
+
 png(filename = plot1img,
     width = 480, height = 480, units = "px", pointsize = 12,
     bg = "white",  res = NA,## ...,
@@ -26,8 +35,14 @@ dev.off()
 
 
 ###############    #plot 2  ###############
+NEIFile <- file.path(getwd(), paste("summarySCC_PM25", ".rds",sep = ""))
+SCCFile <- file.path(getwd(), paste("Source_Classification_Code", ".rds",sep = ""))
+NEI <- readRDS(NEIFile)
+SCC <- readRDS(SCCFile)
+NEISCC <- merge(x = NEI, y = SCC, by = "SCC", all.y = TRUE)
+
 plot2img <- file.path(getwd(), paste("plot2", ".png",sep = ""))
-yearEmission2 <- aggregate(NEISCC1$Emissions, list(NEISCC1$year), sum)
+yearEmission2 <- aggregate(NEISCC$Emissions, list(NEISCC$year), sum)
 names(yearEmission2) <- c("year","Emissions")
 
 png(filename = plot2img,
@@ -44,7 +59,13 @@ dev.off()
 ###############    #plot 3  ###############
 library(ggplot2)
 plot3img <- file.path(getwd(), paste("plot3", ".png",sep = ""))
+
+NEIFile <- file.path(getwd(), paste("summarySCC_PM25", ".rds",sep = ""))
+SCCFile <- file.path(getwd(), paste("Source_Classification_Code", ".rds",sep = ""))
+NEI <- readRDS(NEIFile)
+SCC <- readRDS(SCCFile)
 NEISCC <- merge(x = NEI, y = SCC, by = "SCC", all.y = TRUE)
+
 NEISCC <- NEISCC[ which(NEISCC$fips == "24510"), ]
 yearEmission3 <- aggregate(NEISCC$Emissions, list(NEISCC$type, NEISCC$year),sum)
 names(yearEmission3) <- c("year", "type","Emissions")
@@ -69,8 +90,11 @@ dev.off()
 
 
 ###############    plot 4  ###############
-
 plot4img <- file.path(getwd(), paste("plot4", ".png",sep = ""))
+NEIFile <- file.path(getwd(), paste("summarySCC_PM25", ".rds",sep = ""))
+SCCFile <- file.path(getwd(), paste("Source_Classification_Code", ".rds",sep = ""))
+NEI <- readRDS(NEIFile)
+SCC <- readRDS(SCCFile)
 
 SCC <- SCC[grep("*coal*|*Coal*",SCC$Short.Name),]
 NEISCC <- merge(x = NEI, y = SCC, by = "SCC", all = TRUE)
@@ -79,7 +103,7 @@ NEISCC <- merge(x = NEI, y = SCC, by = "SCC", all = TRUE)
 yearCoal <- aggregate(NEISCC$Emissions, list(NEISCC$year),mean)
 names(yearCoal) <- c("year","Emissions")
 
-# this produced barchart 
+# this produces barchart 
 png(filename = plot4img,
     width = 480, height = 480, units = "px", pointsize = 12,
     bg = "white",  res = NA,## ...,
@@ -106,6 +130,12 @@ dev.off()
 
 ###############    plot 5  ###############
 plot5img <- file.path(getwd(), paste("plot5", ".png",sep = ""))
+
+NEIFile <- file.path(getwd(), paste("summarySCC_PM25", ".rds",sep = ""))
+SCCFile <- file.path(getwd(), paste("Source_Classification_Code", ".rds",sep = ""))
+NEI <- readRDS(NEIFile)
+SCC <- readRDS(SCCFile)
+
 
 SCC <- SCC[grep("*ehicle*"
                 ,SCC$Short.Name),]
@@ -145,12 +175,15 @@ dev.off()
 ###############    plot 6  ###############
 library(ggplot2)
 plot5img <- file.path(getwd(), paste("plot5", ".png",sep = ""))
+NEIFile <- file.path(getwd(), paste("summarySCC_PM25", ".rds",sep = ""))
+SCCFile <- file.path(getwd(), paste("Source_Classification_Code", ".rds",sep = ""))
+NEI <- readRDS(NEIFile)
+SCC <- readRDS(SCCFile)
+
 SCC <- SCC[grep("*ehicle*"
                 ,SCC$Short.Name),]
 NEISCC <- merge(x = NEI, y = SCC, by = "SCC", all = TRUE)
 NEISCC <- NEISCC[ which(NEISCC$fips == "24510" | NEISCC$fips == "06037"), ]
-
-
 
 cityEmission <- aggregate(NEISCC$Emissions, list(NEISCC$fips,NEISCC$year), mean)
 ##names(cityEmission) <- c("city","year","Emissions")
@@ -161,33 +194,23 @@ png(filename = plot2img,
     #type = c("cairo", "cairo-png", "Xlib", "quartz"), 
     antialias = c("default"))
 
-##plot5 <- plot(cityEmission$year, cityEmission$Emissions, xlab = "year", ylab = "emissions", type = "o")
-
 cityEm <- ggplot(cityEmission
                  , aes(y=x, x=Group.2)
                 )
       cityEm+geom_line(aes(group=as.character(Group.1)
                                      ,colour=factor(as.character(Group.1))
-                                    ))+geom_area(aes(group=as.character(Group.1)
+                          )
+                      )+geom_area(aes(group=as.character(Group.1)
                                                      ,colour=factor(as.character(Group.1))
-                                    ))+geom_point(aes(group=as.character(Group.1)
+                                     )
+                                  )+geom_point(aes(group=as.character(Group.1)
                                                       ,colour=factor(as.character(Group.1))
                                                       )
                                                   ,size = 3
-                                                  ,position = "identity")
+                                                  ,position = "identity"
+                                               )
 
       
 
   
 dev.off()
-
-+geom_col(aes(group=as.character(Group.1)
-              ,colour=factor(as.character(Group.1))
-)
-,position = "dodge"
-
-)
-geom_point(aes(colour = factor(as.character(Group.1))
-) 
-, size = 1
-)
